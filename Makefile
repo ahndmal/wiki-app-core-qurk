@@ -6,6 +6,6 @@ dockerRun:
 javaRun:
 	java \
        -Dquarkus.datasource.reactive.url=postgresql://167.235.52.214/welt \
-       -Dquarkus.datasource.username=dev \
-       -Dquarkus.datasource.password=possum! \
+       -Dquarkus.datasource.username=user \
+       -Dquarkus.datasource.password=pass \
        -jar target/quarkus-app/quarkus-run.jar

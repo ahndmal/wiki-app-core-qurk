@@ -28,6 +28,7 @@ public class MainEventListener {
         savedPage.subscribe();
         LOG.info(">>> page saved " + page.id);
 
+        // create page
         Page.count().subscribe().with(
                 it -> System.out.println(it),
                 failure -> System.out.println("Failed with " + failure));
