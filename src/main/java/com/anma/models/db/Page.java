@@ -16,6 +16,7 @@ public class Page extends PanacheEntity {
 //    private long id;
     private String title;
     private String body;
+    @Column(name = "space_key")
     private String spaceKey;
     @Column(name = "parent_id")
     private long parentId;
