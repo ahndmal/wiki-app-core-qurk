@@ -1,15 +1,17 @@
 package com.anma.models.db;
 
+import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name ="spaces")
-public class Space {
+public class Space extends PanacheEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long id;
     private String title;
     private String category;
     @Column(name = "space_key")

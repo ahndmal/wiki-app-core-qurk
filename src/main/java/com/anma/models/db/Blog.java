@@ -1,14 +1,16 @@
 package com.anma.models.db;
 
+import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name ="blogs")
-public class Blog {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Blog extends PanacheEntity {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long id;
     private String title;
     private String body;
     private String spaceKey;
