@@ -1,6 +1,9 @@
 package com.anma.cloud;
 
+import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.auth.oauth2.GoogleCredentials;
 import io.quarkus.credentials.CredentialsProvider;
+import org.mockito.Mockito;
 
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
@@ -19,7 +22,7 @@ class GoogleCredentialsMockProducerTest {
     @Produces
     @Singleton
     @Default
-    public CredentialsProvider credentialsProvider() {
+    public NoCredentialsProvider credentialsProvider() {
         return NoCredentialsProvider.create();
     }
 }
