@@ -1,4 +1,4 @@
-package com.anma.rest.msg;
+package com.anma.cloud.msg;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.Optional;
@@ -26,8 +27,8 @@ import java.util.stream.StreamSupport;
 @Path("/pubsub")
 public class PubSubResource {
     private static final Logger LOG = Logger.getLogger(PubSubResource.class);
-    private final String TOPIC_NAME = "wiki-pages-main";
-    private final String SUB_NAME = "test-subscription";
+    private static final String TOPIC_NAME = "wiki-pages-main";
+    private static final String SUB_NAME = "sub1";
 
     @ConfigProperty(name = "quarkus.google.cloud.project-id")
     String projectId;
@@ -45,7 +46,7 @@ public class PubSubResource {
 
         // Subscribe to PubSub
         MessageReceiver receiver = (message, consumer) -> {
-            LOG.infov("Got message {0}", message.getData().toStringUtf8());
+            LOG.infov("Got message :: {0}", message.getData().toStringUtf8());
             consumer.ack();
         };
         subscriber = Subscriber.newBuilder(subscriptionName, receiver).build();
@@ -62,15 +63,18 @@ public class PubSubResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public void pubSub() throws IOException,InterruptedException {
+    public void pubSub(@QueryParam("msg") String msg) throws IOException, InterruptedException {
+//        var message = "Message in PubSub Quarkus";
+        var message = msg;
+
         Publisher publisher = Publisher.newBuilder(topicName)
                 .setCredentialsProvider(credentialsProvider)
                 .build();
         try {
-            ByteString data = ByteString.copyFromUtf8("my-message");
+            ByteString data = ByteString.copyFromUtf8(message);
             PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
-            ApiFuture<String> messageIdFuture = publisher.publish(pubsubMessage);// Publish the message
-            ApiFutures.addCallback(messageIdFuture, new ApiFutureCallback<String>() {// Wait for message submission and log the result
+            ApiFuture<String> messageIdFuture = publisher.publish(pubsubMessage); // Publish the message
+            ApiFutures.addCallback(messageIdFuture, new ApiFutureCallback<String>() { // Wait for message submission and log the result
                 public void onSuccess(String messageId) {
                     LOG.infov("published with message id {0}", messageId);
                 }
