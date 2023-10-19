@@ -19,8 +19,15 @@ public class PageResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<List<Page>> getPages() {
-        return Page.listAll(Sort.by("id").descending());
+    public Uni<List<Page>> getPages(@QueryParam("limit") long limit) {
+        return Page.list("id < ?1", Sort.by("id", Sort.Direction.Descending), limit);
+    }
+
+    @Path("/all")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<List<Page>> allPages() {
+        return Page.listAll();
     }
 
     @GET
