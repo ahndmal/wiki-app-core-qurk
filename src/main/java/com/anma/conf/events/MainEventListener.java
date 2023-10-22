@@ -14,7 +14,7 @@ import java.util.Random;
 @ApplicationScoped
 public class MainEventListener {
 
-    Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
+    private Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
 
 //    void onMessage(@Observes Event msg) {
 //        msg.fireAsync("").ac

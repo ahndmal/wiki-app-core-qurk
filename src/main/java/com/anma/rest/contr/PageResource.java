@@ -1,10 +1,10 @@
 package com.anma.rest.contr;
 
 import com.anma.models.db.Page;
-import com.anma.rest.req.CreatePageReq;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.panache.common.Sort;
 import io.smallrye.mutiny.Uni;
+import org.jboss.resteasy.reactive.RestQuery;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.*;
@@ -19,7 +19,7 @@ public class PageResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<List<Page>> getPages(@QueryParam("limit") long limit) {
+    public Uni<List<Page>> getPages(@RestQuery long limit) {
         return Page.list("id < ?1", Sort.by("id", Sort.Direction.Descending), limit);
     }
 
